@@ -1,0 +1,36 @@
+
+{
+    "rub": {
+        "key":""
+    },
+    "fecha_radicacion": {
+        "NA": "-1"
+    },
+    "cuenta_conjunta":{
+        "NA": "-1"
+    },
+    "valor_transaccion_credito":{
+        "NA": "0"
+    },
+    "saldo_final":{
+        "NA": "-1"
+    },
+    "tipo_id_beneficiario":{
+        "NA": "-1"
+    },
+    "num_id_beneficiario":{
+        "NA": "-1"
+    },
+    "digito_verificacion_beneficiario":{
+        "NA": "-1"
+    },
+    "nombre_completo_beneficiario":{
+        "NA": "-1"
+    },
+    "tipo_producto_beneficiario":{
+        "NA": "-1"
+    },
+    "num_cuenta_producto_beneficiario":{
+        "NA": "-1"
+    }
+}

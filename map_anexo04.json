@@ -1,0 +1,27 @@
+{
+    "Tipo_Cuenta": {
+        "S": "01",
+        "D": "02"
+    },
+    "Descripcion_Transac": {
+        "(?=.*REMESA.*)": "05-REMESAS",
+        "(?=.*CONSIG.*)(?=.*LOCAL.*)": "01-CONSIGNACION LOCAL",
+        "(?=.*CONSIG.*)(?=.*NACIONAL.*)": "06-CONSIGNACION NACIONAL",
+        "(?=.*CONSIG.*)(?=.*NAL.*)(?=.*REFERENC.*)": "06-CONSIGNACION NACIONAL",
+        "(?=.*ABONO.*)": "04-ABONOS",
+        "(?=.*EXPEDICION GIRO.*)": "07-GIROS"
+    },
+    "Dto/Credi": {
+        "D": "1",
+        "C": "2"
+    },
+    "cod_tipo_doc":{
+        "1": "13",
+        "2": "22",
+        "3": "31",
+        "4": "12",
+        "5": "41",
+        "9": "11"
+    }
+    
+}
