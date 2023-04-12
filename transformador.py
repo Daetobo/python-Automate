@@ -83,10 +83,21 @@ def anexo_04(anex, columns):
         df.loc[df['tipo_transaccion']=='2','num_cuenta_producto_beneficiario'] = df['num_cuenta_producto']
         df.loc[df['tipo_transaccion']=='2','valor_transaccion_debito'] = 0
         
-        df.fillna('p',inplace=True)
-        df1 = df.loc[df.nombre_completo_beneficiario.str.isnumeric()]
-        print(df1)
-        df1.to_excel(ruta + sep + f'respuestas' + sep + 'prueba' + '.xlsx',index=False)
+        # filtrar por solo los campos que beneficiario trajo como numericos y
+        # se transfiere  a la columna de numero de cuenta.
+        
+        #Regex elimina espacios en blanco
+        df.replace('^\s*$', 'n', regex=True, inplace=True)
+        df.fillna('n',inplace=True)
+
+        df.loc[df.nombre_completo_beneficiario.str.isnumeric(),'num_cuenta_producto_beneficiario'] = df['nombre_completo_beneficiario']
+        df.loc[df.nombre_completo_beneficiario.str.isnumeric(),'nombre_completo_beneficiario'] = 0
+        df.loc[df['nombre_completo_beneficiario']=='n','nombre_completo_beneficiario'] = 0
+        df.loc[df['num_cuenta_producto_beneficiario']=='n','num_cuenta_producto_beneficiario'] = 0
+
+        # Account = utils.consultAccount(df,'num_cuenta_producto_beneficiario')
+        # df.loc[df['num_cuenta_producto_beneficiario']=='NA','num_cuenta_producto_beneficiario'] = 0
+
         '''
             Homologación campo descripcion_transaccion cuando NA 
             Ningún tipo de transacción con los especificados en la circular 032 -

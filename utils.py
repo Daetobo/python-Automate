@@ -33,3 +33,7 @@ def output(ruta,fileName,sep,df):
         
         return rub
 
+# def consultAccount(df,colum):
+#     df.fillna('n',inplace=True)
+#     cuentas = df.loc[df[colum].str.isnumeric()]
+#     return cuentas
