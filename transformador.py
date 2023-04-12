@@ -47,10 +47,10 @@ def anexo_04(anex, columns):
         df.Fecha_Vinculada = df.Fecha_Vinculada.dt.strftime('%Y-%m-%d')
         
         # Organizar en el orden que se requiere según plantilla circular 032 anexo_04
-        df = df[['Id_Cliente','cod_tipo_doc','Nombre_Cliente','Fecha_Vinculada','Tipo_Cuenta','Numero_Cuenta','Dto/Credi','Valor_Transa','Descripcion_Transac']]
+        df = df[['Id_Cliente','cod_tipo_doc','Nombre_Cliente','Fecha_Vinculada','Tipo_Cuenta','Numero_Cuenta','Dto/Credi','Valor_Transa','Descripcion_Transac','BENEFICIARIO','CUENTA']] # TODO cambiar nombres beneficiario y cuenta desde el modelo captaciones
         
         # Cambio de nombres de las columnas según plantilla circular 032 anexo_04
-        df.columns = ['num_id_propietario','tipo_id_propietario','nombre_completo_titular','fecha_transaccion','tipo_producto','num_cuenta_producto','tipo_transaccion','valor_transaccion_debito','descripcion_transaccion']
+        df.columns = ['num_id_propietario','tipo_id_propietario','nombre_completo_titular','fecha_transaccion','tipo_producto','num_cuenta_producto','tipo_transaccion','valor_transaccion_debito','descripcion_transaccion','nombre_completo_beneficiario','num_cuenta_producto_beneficiario']
         
         col = df.columns.tolist()
         
@@ -70,14 +70,23 @@ def anexo_04(anex, columns):
                         df.insert(fields.index(i),i,fechaActual)
                     else:
                         df.insert(fields.index(i),i,v)
-        print('estas son las columnas del df',df.columns)
+                        
+        '''
+            Igualar tipo de transacción credito, el beneficiario es el mismo cliente
+        '''
+
         df.loc[df['tipo_transaccion']=='2','valor_transaccion_credito'] = df['valor_transaccion_debito']
+        df.loc[df['tipo_transaccion']=='2','tipo_id_beneficiario'] = df['tipo_id_propietario']
         df.loc[df['tipo_transaccion']=='2','num_id_beneficiario'] = df['num_id_propietario']
         df.loc[df['tipo_transaccion']=='2','nombre_completo_beneficiario'] = df['nombre_completo_titular']
         df.loc[df['tipo_transaccion']=='2','tipo_producto_beneficiario'] = df['tipo_producto']
         df.loc[df['tipo_transaccion']=='2','num_cuenta_producto_beneficiario'] = df['num_cuenta_producto']
         df.loc[df['tipo_transaccion']=='2','valor_transaccion_debito'] = 0
         
+        df.fillna('p',inplace=True)
+        df1 = df.loc[df.nombre_completo_beneficiario.str.isnumeric()]
+        print(df1)
+        df1.to_excel(ruta + sep + f'respuestas' + sep + 'prueba' + '.xlsx',index=False)
         '''
             Homologación campo descripcion_transaccion cuando NA 
             Ningún tipo de transacción con los especificados en la circular 032 -

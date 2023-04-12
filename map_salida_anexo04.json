@@ -24,13 +24,7 @@
     "digito_verificacion_beneficiario":{
         "NA": "-1"
     },
-    "nombre_completo_beneficiario":{
-        "NA": "-1"
-    },
     "tipo_producto_beneficiario":{
-        "NA": "-1"
-    },
-    "num_cuenta_producto_beneficiario":{
         "NA": "-1"
     }
 }
