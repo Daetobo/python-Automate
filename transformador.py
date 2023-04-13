@@ -17,7 +17,7 @@ def anexo_04(anex, columns):
         de escalamiento para el anexo 02 y darle el formato que se requiere
         para generar la plantilla para el convertidor
     '''
-    
+   
     fileNames = utils.findFile(anexo='anexo_04')
     
     for fileName in fileNames:
@@ -27,6 +27,9 @@ def anexo_04(anex, columns):
             continue
         
         rub = utils.output(ruta,fileName,sep,df)
+        
+        #Elimina espacios en blanco del dataframe
+        utils.deleteSpaces(df=df)
         
         #Leer Mapeo columnas Json anexo_04
         mapping = json.load(open('map_anexo' + anex + '.json'))
@@ -86,8 +89,7 @@ def anexo_04(anex, columns):
         # filtrar por solo los campos que beneficiario trajo como numericos y
         # se transfiere  a la columna de numero de cuenta.
         
-        #Regex elimina espacios en blanco
-        df.replace('^\s*$', 'n', regex=True, inplace=True)
+        
         df.fillna('n',inplace=True)
 
         df.loc[df.nombre_completo_beneficiario.str.isnumeric(),'num_cuenta_producto_beneficiario'] = df['nombre_completo_beneficiario']
@@ -95,8 +97,7 @@ def anexo_04(anex, columns):
         df.loc[df['nombre_completo_beneficiario']=='n','nombre_completo_beneficiario'] = 0
         df.loc[df['num_cuenta_producto_beneficiario']=='n','num_cuenta_producto_beneficiario'] = 0
 
-        # Account = utils.consultAccount(df,'num_cuenta_producto_beneficiario')
-        # df.loc[df['num_cuenta_producto_beneficiario']=='NA','num_cuenta_producto_beneficiario'] = 0
+        cuentas = utils.accountSQL(df,'num_cuenta_producto_beneficiario')
 
         '''
             Homologación campo descripcion_transaccion cuando NA 

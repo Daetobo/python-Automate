@@ -33,7 +33,18 @@ def output(ruta,fileName,sep,df):
         
         return rub
 
-# def consultAccount(df,colum):
-#     df.fillna('n',inplace=True)
-#     cuentas = df.loc[df[colum].str.isnumeric()]
-#     return cuentas
+def deleteSpaces(df):
+    '''
+        Función utiliza Regex para reemplazar los valores en blanco por "n" 
+        que significa no aplica
+    '''
+    df.replace('^\s*$','n', regex=True, inplace=True)
+
+def accountSQL(df,colum):
+    lista = ''
+    arrayCuentas = df[colum].tolist()
+    cuentas = [str(x) for x in arrayCuentas if x!=0 and str(x).isnumeric()]
+    lista = list(set(cuentas))
+    uniqueAccount = '(' + ','.join(lista) + ')'
+    return uniqueAccount
+
