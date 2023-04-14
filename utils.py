@@ -45,6 +45,6 @@ def accountSQL(df,colum):
     arrayCuentas = df[colum].tolist()
     cuentas = [str(x) for x in arrayCuentas if x!=0 and str(x).isnumeric()]
     lista = list(set(cuentas))
-    uniqueAccount = '(' + ','.join(lista) + ')'
+    uniqueAccount = ','.join(lista)
     return uniqueAccount
 

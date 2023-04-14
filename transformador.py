@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import re
 import utils
+import respuestas.data.conexion as cn
 import json
 import os
 import datetime
@@ -14,7 +15,7 @@ fechaActual = datetime.datetime.now().date()
 def anexo_04(anex, columns):
     '''
         Función encargada de obtener la información de los archivos
-        de escalamiento para el anexo 02 y darle el formato que se requiere
+        de escalamiento para el anexo 04 y darle el formato que se requiere
         para generar la plantilla para el convertidor
     '''
    
@@ -98,7 +99,8 @@ def anexo_04(anex, columns):
         df.loc[df['num_cuenta_producto_beneficiario']=='n','num_cuenta_producto_beneficiario'] = 0
 
         cuentas = utils.accountSQL(df,'num_cuenta_producto_beneficiario')
-
+        rs = cn.resultSet(cuentas)
+        rs.to_excel(ruta + sep + f'respuestas' + sep + 'pruebacuentasf' + '.xlsx',index=False)
         '''
             Homologación campo descripcion_transaccion cuando NA 
             Ningún tipo de transacción con los especificados en la circular 032 -
