@@ -13,7 +13,7 @@ def resultSet(data):
         if connection:
             cursor = connection.cursor()
             print('ANTES DE EJECUTAR ok!')
-            sql = 'WITH temporalKey (key) AS (SELECT CXNAMK FROM VISIONR.CXREF WHERE CXNOAC in('+ data + ')) SELECT CNNAME FROM VISIONR.CNAME B,temporalKey C LEFT JOIN ON (C.CXNAMK = B.CNNAMK)  '
+            sql = 'WITH temporalKey (key) AS (SELECT CXNAMK FROM VISIONR.CXREF WHERE CXNOAC in('+ data + ')) SELECT CNNAME FROM VISIONR.CNAME B RIGHT JOIN temporalKey C ON (B.CNNAMK = C.key)'
             print(sql)
             cursor.execute(sql)
             rs = pd.read_sql(sql,connection)
