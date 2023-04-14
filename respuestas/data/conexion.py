@@ -14,8 +14,6 @@ def resultSet(data):
             cursor = connection.cursor()
             print('ANTES DE EJECUTAR ok!')
             sql = 'WITH temporalKey (key,account) AS (SELECT CXNAMK,CXNOAC FROM VISIONR.CXREF WHERE CXNOAC in('+ data + ')) SELECT CNNAME,CNNOSS,CNCDTI,account FROM VISIONR.CNAME B RIGHT JOIN temporalKey C ON (B.CNNAMK = C.key)'
-            
-            print(sql)
             cursor.execute(sql)
             rs = pd.read_sql(sql,connection)
     except pyodbc.Error as ex:

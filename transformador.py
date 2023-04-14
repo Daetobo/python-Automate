@@ -100,8 +100,22 @@ def anexo_04(anex, columns):
 
         cuentas = utils.accountSQL(df,'num_cuenta_producto_beneficiario')
         rs = cn.resultSet(cuentas)
-        rs.to_excel(ruta + sep + f'respuestas' + sep + 'pruebacuentasf' + '.xlsx',index=False)
         
+        #Normalización de los campos claves en el mismo formato.
+        
+        rs = rs[rs['ACCOUNT'] != 0]       
+        df['num_cuenta_producto_beneficiario'] = df['num_cuenta_producto_beneficiario'].astype('str').str.strip()
+        rs['ACCOUNT'] = rs['ACCOUNT'].astype('str').str.strip()
+        rs["ACCOUNT"] = rs["ACCOUNT"].apply(lambda x: x.split(".")[0])
+
+        df = pd.merge(df,rs,how='left',left_on='num_cuenta_producto_beneficiario',right_on='ACCOUNT').fillna(0)  
+        
+        df.loc[df['tipo_transaccion']=='1','nombre_completo_beneficiario'] = df['CNNAME']
+        df.loc[df['num_id_beneficiario']=='1','nombre_completo_beneficiario'] = df['CNNOSS'] 
+        df.loc[df['tipo_id_beneficiario']=='1','nombre_completo_beneficiario'] = df['CNCDTI']
+        
+        df = df.drop(['CNNAME', 'CNNOSS', 'CNCDTI','ACCOUNT'],axis=1)  
+            
         '''
             Homologación campo descripcion_transaccion cuando NA 
             Ningún tipo de transacción con los especificados en la circular 032 -
