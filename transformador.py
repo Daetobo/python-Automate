@@ -101,6 +101,7 @@ def anexo_04(anex, columns):
         cuentas = utils.accountSQL(df,'num_cuenta_producto_beneficiario')
         rs = cn.resultSet(cuentas)
         rs.to_excel(ruta + sep + f'respuestas' + sep + 'pruebacuentasf' + '.xlsx',index=False)
+        
         '''
             Homologación campo descripcion_transaccion cuando NA 
             Ningún tipo de transacción con los especificados en la circular 032 -
