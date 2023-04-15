@@ -48,7 +48,7 @@ def accountSQL(df,colum):
     uniqueAccount = ','.join(lista)
     return uniqueAccount
 
-def normalizeLen(rs,column,len):
-    col = rs[column]
-    col_len = col.str.len()
+def normalizeLen(df,column,len):
+    col = df[column]
+    col_len = col
     print(col_len)
