@@ -4,8 +4,8 @@ import os
 import glob
 import datetime
 
-def convertData(df, column, regex, value):
-    if column == 'cod_tipo_doc':
+def convertData(df, column, regex, value, mp):
+    if mp == 'cod_tipo_doc':
         df.loc[df[column]==int(regex),column] = value
     else:
         df.loc[df[column].str.contains(str(regex), flags=re.IGNORECASE, regex=True), column ] = value

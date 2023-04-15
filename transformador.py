@@ -46,7 +46,8 @@ def anexo_04(anex, columns):
                     df=df,
                     column=i,
                     regex=k, 
-                    value=v)
+                    value=v,
+                    mp=i)
         df['Fecha_Vinculada'] = pd.to_datetime(df['Fecha_Vinculada'],format='%Y%m%d')
         df.Fecha_Vinculada = df.Fecha_Vinculada.dt.strftime('%Y-%m-%d')
         
@@ -114,6 +115,15 @@ def anexo_04(anex, columns):
         df.loc[df['tipo_transaccion']=='1','nombre_completo_beneficiario'] = df['CNNAME']
         df.loc[df['tipo_transaccion']=='1','num_id_beneficiario'] = df['CNNOSS'] 
         df.loc[df['tipo_transaccion']=='1','tipo_id_beneficiario'] = df['CNCDTI']
+        
+        for k,v in mapping['cod_tipo_doc'].items():
+            utils.convertData(
+                df=df,
+                column='tipo_id_beneficiario',
+                regex=k,
+                value=v,
+                mp= 'cod_tipo_doc'
+            )
         
         df = df.drop(['CNNAME', 'CNNOSS', 'CNCDTI','ACCOUNT'],axis=1)  
             
