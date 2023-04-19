@@ -52,7 +52,7 @@ def anexo_04(anex, columns):
         df.Fecha_Vinculada = df.Fecha_Vinculada.dt.strftime('%Y-%m-%d')
         
         # Organizar en el orden que se requiere según plantilla circular 032 anexo_04
-        df = df[['Id_Cliente','cod_tipo_doc','Nombre_Cliente','Fecha_Vinculada','Tipo_Cuenta','Numero_Cuenta','Dto/Credi','Valor_Transa','Descripcion_Transac','BENEFICIARIO','CUENTA']] # TODO cambiar nombres beneficiario y cuenta desde el modelo captaciones
+        df = df[['Id_Cliente','cod_tipo_doc','Nombre_Cliente','Fecha_Vinculada','Tipo_Cuenta','Numero_Cuenta','Dto/Credi','Valor_Transa','Descripcion_Transac','BENEFICIARIO','CUENTA']] 
         
         # Cambio de nombres de las columnas según plantilla circular 032 anexo_04
         df.columns = ['num_id_propietario','tipo_id_propietario','nombre_completo_titular','fecha_transaccion','tipo_producto','num_cuenta_producto','tipo_transaccion','valor_transaccion_debito','descripcion_transaccion','nombre_completo_beneficiario','num_cuenta_producto_beneficiario']
@@ -111,7 +111,7 @@ def anexo_04(anex, columns):
         rs['ACCOUNT'] = rs['ACCOUNT'].apply(lambda x: x.zfill(11))
 
         df = pd.merge(df,rs,how='left',left_on='num_cuenta_producto_beneficiario',right_on='ACCOUNT').fillna(0)
-        df.to_excel(ruta + sep + f'respuestas' + sep + 'merge' + '.xlsx',index=False)
+
         df.loc[df['tipo_transaccion']=='1','nombre_completo_beneficiario'] = df['CNNAME']
         df.loc[df['tipo_transaccion']=='1','num_id_beneficiario'] = df['CNNOSS'] 
         df.loc[df['tipo_transaccion']=='1','tipo_id_beneficiario'] = df['CNCDTI']
@@ -125,7 +125,8 @@ def anexo_04(anex, columns):
                 mp= 'cod_tipo_doc'
             )
         
-        df = df.drop(['CNNAME', 'CNNOSS', 'CNCDTI','ACCOUNT'],axis=1)  
+        df = df.drop(['CNNAME', 'CNNOSS', 'CNCDTI','ACCOUNT'],axis=1)
+        df['num_cuenta_producto_beneficiario'] = df['num_cuenta_producto_beneficiario'].apply(lambda x: x.split(".")[0])  
             
         '''
             Homologación campo descripcion_transaccion cuando NA 

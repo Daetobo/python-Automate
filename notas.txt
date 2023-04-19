@@ -1,1 +1,7 @@
-sql = 'WITH temporalKey (key) AS (SELECT CXNAMK FROM VISIONR.CXREF WHERE CXNOAC in('+ data + ')) SELECT CNNAME,CNNOSS,CNCDTI FROM VISIONR.CNAME B RIGHT JOIN temporalKey C ON (B.CNNAMK = C.key)'
+* para los datos string del nombre benerficiario es -1 cuando no se tiene
+* numero de cuenta si no tiene info es -1 ya que es numerico
+* revisar cuando trae numeros y son menores a 11 digitos en el campo beneficiario no llevarlos al campo
+  numero de cuenta ya que no corresponde
+* revisar tipo producto beneficiario porque me trajo -1
+* num_id_beneficiario -1 cuando no s tiene
+* REVISAR porque me trae en algunas cuentas que son 0 me trae info de beneficiario
